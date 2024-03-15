@@ -43,7 +43,7 @@ app = FastAPI(lifespan=lifespan, title="Todo API",
     version="0.0.1",
     servers=[
         {
-            "url": "https://4ae7-223-123-103-122.ngrok-free.app", # ADD NGROK URL Here Before Creating GPT Action
+            "url": "http://127.0.0.1:8000", # ADD NGROK URL Here Before Creating GPT Action
             "description": "Development Server"
         }
         ])

@@ -72,6 +72,12 @@ Open in Browser:
 
     http://127.0.0.1:8000/openapi.json
 
+## python console application
+make a file:
+    python_console_client.py
+run command:
+   poetry run python python_console_client.py  
+
 ## Publish on the Web while running locally
 
 Install Ngrok:
