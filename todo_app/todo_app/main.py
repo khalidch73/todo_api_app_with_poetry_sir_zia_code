@@ -11,6 +11,9 @@ class Todo(SQLModel, table=True):
     content: str = Field(index=True)
 
 
+# class Todo_description(SQLModel, table = True):
+#     content: str = Field(index = True)
+
 # only needed for psycopg 3 - replace postgresql
 # with postgresql+psycopg in settings.DATABASE_URL
 connection_string = str(settings.DATABASE_URL).replace(
@@ -43,7 +46,7 @@ app = FastAPI(lifespan=lifespan, title="Todo API",
     version="0.0.1",
     servers=[
         {
-            "url": "http://127.0.0.1:8000", # ADD NGROK URL Here Before Creating GPT Action
+            "url": "https://dd09-37-111-146-246.ngrok-free.app", # ADD NGROK URL Here Before Creating GPT Action
             "description": "Development Server"
         }
         ])
