@@ -160,3 +160,27 @@ def test_delete_all_todos():
     assert response_read_all.status_code == 200
     todos = response_read_all.json()
     assert len(todos) == 0
+
+# Test 08 for partial_update_todo
+def test_partial_update_todo():
+    # Setup: Create a TestClient instance
+    client = TestClient(app)
+
+    # Create a Todo item
+    todo_content = "Test Todo"
+    response_create = client.post("/todos/", json={"content": todo_content})
+    assert response_create.status_code == 200
+    created_todo = response_create.json()
+
+    # Update the content of the Todo item partially
+    updated_content = "Updated Todo"
+    response_partial_update = client.patch(f"/todos/{created_todo['id']}/", json={"content": updated_content})
+    assert response_partial_update.status_code == 200
+
+    # Retrieve the updated Todo item
+    response_read = client.get(f"/todos/{created_todo['id']}/")
+    assert response_read.status_code == 200
+
+    # Assert that the content of the Todo item was partially updated
+    updated_todo = response_read.json()
+    assert updated_todo['content'] == updated_content

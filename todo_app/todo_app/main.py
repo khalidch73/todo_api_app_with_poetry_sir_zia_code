@@ -1,18 +1,11 @@
 # main.py
 from contextlib import asynccontextmanager
-from typing import Union, Optional, Annotated
-from todo_app import settings
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from typing import Annotated
+from todo_app import settings 
+from sqlmodel import Session, SQLModel, create_engine, select
 from fastapi import FastAPI, Depends, HTTPException, Path
+from todo_app.models import Todo
 
-
-class Todo(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    content: str = Field(index=True)
-
-
-# class Todo_description(SQLModel, table = True):
-#     content: str = Field(index = True)
 
 # only needed for psycopg 3 - replace postgresql
 # with postgresql+psycopg in settings.DATABASE_URL
@@ -46,7 +39,7 @@ app = FastAPI(lifespan=lifespan, title="Todo API",
     version="0.0.1",
     servers=[
         {
-            "url": "https://dd09-37-111-146-246.ngrok-free.app", # ADD NGROK URL Here Before Creating GPT Action
+            "url": "http://127.0.0.1:8000/", # ADD NGROK URL Here Before Creating GPT Action
             "description": "Development Server"
         }
         ])
@@ -132,3 +125,19 @@ def delete_all_todos(session: Annotated[Session, Depends(get_session)]):
     # Return a JSON response indicating the successful deletion of all Todo items
     return {"message": "All Todo items deleted successfully"}
 
+
+# 08 Define the route to partially update a Todo item using PATCH
+@app.patch("/todos/{todo_id}/")
+def partial_update_todo(todo_id: int, updated_todo: Todo, session: Annotated[Session, Depends(get_session)]):
+    # Retrieve the Todo item from the database
+    todo = session.get(Todo, todo_id)
+    # Check if the Todo item exists
+    if not todo:
+        # If Todo item does not exist, raise HTTPException with 404 status code
+        raise HTTPException(status_code=404, detail="Todo not found")
+    # Update only the provided fields of the existing Todo with data from updated_todo
+    for field, value in updated_todo.dict(exclude_unset=True).items():
+        setattr(todo, field, value)
+    session.commit()
+    session.refresh(todo)
+    return todo
