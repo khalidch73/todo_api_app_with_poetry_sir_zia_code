@@ -56,6 +56,9 @@ def read_root():
 # 02 Define the route to create_todo Todos in database
 @app.post("/todos/", response_model=Todo)
 def create_todo(todo: Todo, session: Annotated[Session, Depends(get_session)]):
+    existing_todo = session.get(Todo, todo.id)
+    if existing_todo:
+        raise HTTPException(status_code=409, detail=f"Todo with ID {todo.id} already exists try another id")
     # Add the new todo item to the session
     session.add(todo)
     # Commit the transaction to save the changes to the database
