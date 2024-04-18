@@ -7,7 +7,6 @@ from todo_app import settings
 def test_read_main():
     # Setup: Create a TestClient instance
     client = TestClient(app)
-    
     # Send GET request to the root endpoint
     response = client.get("/")
     
