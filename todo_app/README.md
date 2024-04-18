@@ -161,3 +161,24 @@ PostgreSQL, a popular open-source relational database, is not inherently optimiz
 ### Conclusion
 
 In essence, PostgreSQL is a capable choice for microservices development due to its features and reliability. Its open-source nature and wide availability across cloud platforms make it conducive to avoiding cloud vendor lock-in, particularly if you adhere to standard PostgreSQL functionalities. However, when considering cloud-specific PostgreSQL-compatible databases, it's important to balance their advanced features and conveniences against the potential for increased vendor dependency, especially with proprietary enhancements or serverless capabilities like those found in "Serverless Neo Database" and similar offerings.
+
+#### Now Let's Containerize the App
+https://fastapi.tiangolo.com/deployment/docker/
+
+Checking to see if Docker is running:
+
+    docker version
+
+run hello_world for docker in cmd
+    
+    docker run hello-world
+
+Building the Image for Dev:
+
+    docker build -f Dockerfile.dev -t my-dev-image .
+
+Check Images:
+
+    docker images
+
+
