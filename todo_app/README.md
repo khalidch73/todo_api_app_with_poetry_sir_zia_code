@@ -181,4 +181,41 @@ Check Images:
 
     docker images
 
+verify config
+
+    docker inspect my-dev-image
+
+Running the Container for Dev:
+
+    docker run -d --name dev-cont1 -p 8000:8000 my-dev-image
+
+check container is running 
+
+    docker ps
+
+check all containers 
+
+    docker ps -a 
+
+check container logs 
+
+    docker logs <containerName>
+
+check container logs in live mode 
+    docker logs <containerName> -f    (-f mean follow live logs)
+
+stop container 
+
+    docker stop <containerName or id>
+    docker kill <containerId or name>
+
+remove docker container  
+    docker rm <containerName or id>
+
+restart container 
+    docker start <container Id or name>
+      
+Test the Container
+    docker run -it --rm my-dev-image /bin/bash -c "poetry run pytest"
+
 
